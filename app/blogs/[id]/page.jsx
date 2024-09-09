@@ -2,7 +2,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/navbar';
 
 export default function UserBlogs({ params }) {
     const { id } = params; // 'id' is the user ID

@@ -27,7 +27,7 @@
 // }
 
 "use client";
-import Navbar from "./Navbar"; // Adjust the import path if necessary
+import Navbar from "./navbar"; // Adjust the import path if necessary
 import { useSession } from "next-auth/react";
 
 export default function UserInfo() {

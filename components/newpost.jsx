@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Navbar from './Navbar';
+import Navbar from './navbar';
 import { useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react'; // Import useSession
 
