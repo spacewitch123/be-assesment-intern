@@ -6,33 +6,34 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 
 export default function UserBlogs() {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const [blogs, setBlogs] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         async function fetchBlogs() {
-            try {
-                const userId = session?.user?.id;
-
-                const response = await fetch(`/api/blogs-by-user?userId=${userId}`); // Adjust the API endpoint if necessary
-                if (!response.ok) {
-                    throw new Error('Failed to fetch blogs');
+            if (status === "authenticated") {
+                try {
+                    const userId = session?.user?.id;
+                    const response = await fetch(`/api/blogs-by-user?userId=${userId}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch blogs');
+                    }
+                    const data = await response.json();
+                    setBlogs(data.blogs);
+                } catch (err) {
+                    setError(err.message);
+                } finally {
+                    setLoading(false);
                 }
-                const data = await response.json();
-                setBlogs(data.blogs);
-            } catch (err) {
-                setError(err.message);
-            } finally {
-                setLoading(false);
             }
         }
 
         fetchBlogs();
-    }, [session]);
+    }, [session, status]);
 
-    if (loading) {
+    if (status === "loading" || loading) {
         return (
             <div className="flex items-center justify-center h-screen">
                 <p className="text-lg">Loading...</p>

@@ -65,17 +65,19 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSession } from "next-auth/react";
 import Navbar from '@/components/navbar';
 
 export default function UserBlogs({ params }) {
-    const { id } = params; // 'id' is the user ID
+    const { data: session } = useSession();
     const [blogs, setBlogs] = useState([]);
     const router = useRouter();
 
     useEffect(() => {
         async function fetchUserBlogs() {
             try {
-                const response = await fetch(`/api/blogs-by-user/${id}`);
+                const userId = session?.user?.id;
+                const response = await fetch(`/api/blogs-by-user/${userId}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch blogs');
                 }
