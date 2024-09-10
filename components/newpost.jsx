@@ -77,11 +77,12 @@ export default function CreatePost() {
 
             if (response.ok) {
                 alert('Blog post created successfully');
-                e.target.reset();// Refresh page on success
+                e.target.reset(); // Refresh page on success
             } else {
                 console.error('Error:', result.message || result);
             }
         } catch (error) {
+            alert('An error occurred while creating the blog post.');
             console.error('Error:', error.message);
         }
     };
